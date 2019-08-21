@@ -71,7 +71,8 @@ class BlockDecoder(object):
         id_skip=('noskip' not in block_string),
         se_ratio=float(options['se']) if 'se' in options else None,
         strides=[int(options['s'][0]), int(options['s'][1])],
-        conv_type=int(options['c']) if 'c' in options else 0)
+        conv_type=int(options['c']) if 'c' in options else 1)
+        # conv_type=int(options['c']) if 'c' in options else 0)
 
   def _encode_block_string(self, block):
     """Encodes a block to a string."""
@@ -141,10 +142,12 @@ def efficientnet(width_coefficient=None,
       depth_coefficient=depth_coefficient,
       depth_divisor=8,
       min_depth=None,
-      relu_fn=tf.nn.swish,
+      # relu_fn=tf.nn.swish,
+      relu_fn=tf.nn.relu,
       # The default is TPU-specific batch norm.
       # The alternative is tf.layers.BatchNormalization.
-      batch_norm=utils.TpuBatchNormalization,  # TPU-specific requirement.
+      # batch_norm=utils.TpuBatchNormalization,  # TPU-specific requirement.
+      batch_norm=tf.layers.BatchNormalization,
       use_se=True)
   decoder = BlockDecoder()
   return decoder.decode(blocks_args), global_params

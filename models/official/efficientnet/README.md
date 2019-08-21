@@ -105,3 +105,17 @@ Then train the model:
 
 
 For more instructions, please refer to our tutorial: https://cloud.google.com/tpu/docs/tutorials/efficientnet
+
+## 5. Training on SURFsara hw
+
+### 5a. LISA GPU
+
+Load the approriate modules:
+```
+module load CUDA/10.0.130 NCCL/2.3.5-CUDA-10.0.130 cuDNN/7.4.2-CUDA-10.0.130 surf-devel 2019 Python/3.6.6-intel-2018b
+```
+
+Execute command:
+```
+python main.py --use_tpu=False --train_batch_size=256 --num_parallel_calls=24 --data_dir="/nfs/managed_datasets/imagenet_tfrec_shuffled/train" --mode="train"
+```
